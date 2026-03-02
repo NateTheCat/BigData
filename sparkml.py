@@ -71,7 +71,7 @@ data = [
 ]
 
 def write_to_hbase_partition(partition):
-    connection = happybase.Connection('localhost', 9090)
+    connection = happybase.Connection('master')
     connection.open()
     table = connection.table('sleep_metrics')
     for row in partition:
