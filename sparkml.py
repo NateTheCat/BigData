@@ -58,7 +58,8 @@ model = rf.fit(train_data)
 predictions = model.transform(test_data)
 rmse = RegressionEvaluator(labelCol="label", predictionCol="prediction", metricName="rmse").evaluate(predictions)
 r2 = RegressionEvaluator(labelCol="label", predictionCol="prediction", metricName="r2").evaluate(predictions)
-print(f"RMSE: {rmse}, R2: {r2}")
+mae = RegressionEvaluator(labelCol="label", predictionCol="prediction", metricName="mae").evaluate(predictions)
+print(f"RMSE: {rmse}, R2: {r2}, MAE: {mae}")
 
 # Feature importances
 feature_importances = {feature_cols[i]: float(model.featureImportances[i]) for i in range(len(feature_cols))}
@@ -67,6 +68,7 @@ feature_importances = {feature_cols[i]: float(model.featureImportances[i]) for i
 data = [
     ('sleep1', 'metrics:rmse', str(rmse)),
     ('sleep1', 'metrics:r2', str(r2)),
+    ('sleep1', 'metrics:mae', str(mae)),
     ('sleep1', 'importance:feature_importances', json.dumps(feature_importances))
 ]
 
