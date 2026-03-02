@@ -59,10 +59,18 @@ predictions = model.transform(test_data)
 rmse = RegressionEvaluator(labelCol="label", predictionCol="prediction", metricName="rmse").evaluate(predictions)
 r2 = RegressionEvaluator(labelCol="label", predictionCol="prediction", metricName="r2").evaluate(predictions)
 mae = RegressionEvaluator(labelCol="label", predictionCol="prediction", metricName="mae").evaluate(predictions)
-print(f"RMSE: {rmse}, R2: {r2}, MAE: {mae}")
 
 # Feature importances
 feature_importances = {feature_cols[i]: float(model.featureImportances[i]) for i in range(len(feature_cols))}
+
+# Print output
+print("*********************************************\n")
+print(f"RMSE: {rmse}, R2: {r2}, MAE: {mae}")
+print("\n*********************************************\n")
+print("Feature Importances:")
+for feature, importance in feature_importances.items():
+    print(f"{feature}: {importance}")
+print("*********************************************\n")
 
 # Write to HBase
 data = [
